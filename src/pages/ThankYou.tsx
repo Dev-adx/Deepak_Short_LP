@@ -12,42 +12,6 @@ const ThankYou = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Trustpilot bar */}
-      <div className="bg-background/95 backdrop-blur-md border-b border-border/40 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5">
-              <svg className="h-6 w-6 flex-shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="40" height="40" rx="5" fill="#00B67A"/>
-                <path d="M20 7l3.6 11H35l-9.3 6.8 3.6 11L20 29l-9.3 6.8 3.6-11L5 18h11.4L20 7z" fill="white"/>
-              </svg>
-              <span className="font-bold text-sm tracking-tight text-[#191919] dark:text-white leading-none">Trustpilot</span>
-            </div>
-            <div className="flex gap-[2px]">
-              {[...Array(5)].map((_, i) => (
-                <svg key={i} className="w-4 h-4" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="40" height="40" fill="#00B67A"/>
-                  <path d="M20 7l3.6 11H35l-9.3 6.8 3.6 11L20 29l-9.3 6.8 3.6-11L5 18h11.4L20 7z" fill="white"/>
-                </svg>
-              ))}
-            </div>
-            <span className="text-sm font-bold text-foreground">4.7 / 5</span>
-            <span className="text-xs text-muted-foreground hidden sm:inline">· 312 reviews</span>
-          </div>
-
-          <div className="hidden sm:block w-px h-5 bg-border" />
-
-          <div className="flex items-center gap-1.5">
-            <svg className="w-4 h-4 text-blue-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-            <span className="text-xs text-muted-foreground">
-              SEBI Registered:&nbsp;<span className="font-semibold text-foreground">INH000022297</span>
-            </span>
-          </div>
-        </div>
-      </div>
 
       <div className="max-w-4xl mx-auto px-4 py-8 sm:py-10 md:py-12">
         {/* Success Header */}
@@ -94,30 +58,6 @@ const ThankYou = () => {
                 <p className="font-bold text-sm text-foreground">
                   {formatTime()}
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Coach Card */}
-        <div className="mb-6 rounded-2xl bg-card border shadow-lg overflow-hidden">
-          <div className="p-5 sm:p-6">
-            <div className="flex items-center gap-4">
-              <img
-                src={coachImg}
-                alt="Siddharth Kapoor - Trading Instructor"
-                className="w-20 h-20 rounded-full object-cover border-2 border-orange-500/30"
-              />
-              <div>
-                <h3 className="font-display font-bold text-lg text-foreground mb-1">Siddharth Kapoor</h3>
-                <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
-                  {["Trading Instructor", "5+ yrs in markets", "Deep exposure to diverse trade setups"].map((item) => (
-                    <li key={item} className="flex items-center gap-2">
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>
