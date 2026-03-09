@@ -69,7 +69,7 @@ const HeroSection = () => {
           <div className="grid lg:grid-cols-2 gap-5 items-center">
             {/* Left: Content */}
             <div className="space-y-3">
-              <h1 className="font-display text-3xl md:text-5xl font-bold leading-tight text-foreground">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-5xl font-bold leading-tight text-foreground">
                 A Structured,{" "}
                 <span className="text-gradient">Rule-Based Approach to Reading Markets</span>
               </h1>
@@ -82,7 +82,7 @@ const HeroSection = () => {
                 <img
                   src={coachImg}
                   alt="Siddharth Kapoor - Trading Instructor"
-                  className="w-32 h-32 rounded-full object-cover border-2 border-primary/30"
+                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-2 border-primary/30"
                 />
                 <div>
                   <h3 className="font-display font-bold text-foreground mb-1">Siddharth Kapoor</h3>
@@ -102,21 +102,31 @@ const HeroSection = () => {
                 {[
                   { label: getDateRange() },
                   { label: formatTime() },
-                  { label: "Live on Zoom" },
+                  {
+                    label: "Live on",
+                    icon: (
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="64" height="64" rx="12" fill="#2D8CFF"/>
+                        <path d="M10 22C10 19.7909 11.7909 18 14 18H36C38.2091 18 40 19.7909 40 22V42C40 44.2091 38.2091 46 36 46H14C11.7909 46 10 44.2091 10 42V22Z" fill="white"/>
+                        <path d="M40 28L54 21V43L40 36V28Z" fill="white"/>
+                      </svg>
+                    )
+                  },
                   { label: `Only ${seats} seats left` },
                 ].map((item) => (
                   <span
                     key={item.label}
-                    className="bg-muted/80 border-2 border-orange-500/60 rounded-lg px-4 py-2.5 text-xs font-bold text-orange-600 glow-orange"
+                    className="bg-muted/80 border-2 border-orange-500/60 rounded-lg px-4 py-2.5 text-xs font-bold text-orange-600 glow-orange flex items-center gap-1.5"
                   >
                     {item.label}
+                    {item.icon && item.icon}
                   </span>
                 ))}
               </div>
             </div>
 
             {/* Right: Form */}
-            <div id="register-form" className="bg-card rounded-2xl border shadow-lg p-6 lg:p-8">
+            <div id="register-form" className="bg-card rounded-2xl border shadow-lg p-4 sm:p-6 lg:p-8">
               {submitted ? (
                 <div className="text-center py-10 space-y-3">
                   <h3 className="font-display text-2xl font-bold text-foreground">You're Registered!</h3>

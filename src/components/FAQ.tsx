@@ -14,7 +14,7 @@ const FAQ = () => {
   return (
     <section className="py-7 px-4">
       <div className="max-w-3xl mx-auto">
-        <h2 className="font-display text-3xl font-bold text-center mb-10 text-foreground">
+        <h2 className="font-display text-3xl sm:text-5xl font-bold text-center mb-6 sm:mb-10 text-foreground">
           Frequently Asked <span className="text-gradient">Questions</span>
         </h2>
         <div className="space-y-3">

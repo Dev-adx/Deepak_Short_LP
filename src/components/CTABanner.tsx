@@ -9,8 +9,8 @@ const CTABanner = () => {
 
   return (
     <section className="py-5 px-4">
-      <div className="max-w-3xl mx-auto gradient-primary rounded-2xl p-6 md:p-8 text-center space-y-4">
-        <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
+      <div className="max-w-3xl mx-auto gradient-primary rounded-2xl p-5 sm:p-6 md:p-8 text-center space-y-3 sm:space-y-4">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-primary-foreground">
           Register to Reserve Your Spot
         </h2>
         <div className="flex items-center justify-center gap-3 text-primary-foreground">

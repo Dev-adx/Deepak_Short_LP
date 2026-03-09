@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { useEventConfig } from "@/hooks/useEventConfig";
 
 const StickyBanner = () => {
-  const { config } = useEventConfig();
+  const { getOfferEndDateTime, config } = useEventConfig();
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetDate = new Date(config.offerEndDatetime);
+    const targetDate = getOfferEndDateTime();
     const update = () => {
       const now = new Date();
       const diff = Math.max(0, targetDate.getTime() - now.getTime());

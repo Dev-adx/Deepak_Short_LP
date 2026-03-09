@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const testimonials = [
   { name: "Rahul M.", role: "Working Professional", text: "The structured approach changed how I look at charts. Finally a system I can follow daily!", date: "2 weeks ago" },
@@ -15,8 +15,8 @@ const testimonials = [
 
 type Testimonial = { name: string; role: string; text: string; date: string };
 
-const ReviewCard = ({ t, getInitials }: { t: Testimonial; getInitials: (n: string) => string }) => (
-  <div className="bg-card rounded-2xl border shadow-lg p-4 flex flex-col items-center text-center gap-1.5">
+const ReviewCard = ({ t, getInitials, className = "" }: { t: Testimonial; getInitials: (n: string) => string; className?: string }) => (
+  <div className={`bg-card rounded-2xl border shadow-lg p-4 flex flex-col items-center text-center gap-1.5 ${className}`}>
     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
       {getInitials(t.name)}
     </div>
@@ -37,42 +37,83 @@ const ReviewCard = ({ t, getInitials }: { t: Testimonial; getInitials: (n: strin
 
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const desktopTrackRef = useRef<HTMLDivElement>(null);
+  const animFrameRef = useRef<number | null>(null);
+  const pausedRef = useRef(false);
 
   const getInitials = (name: string) => {
     return name.split(" ").map((n) => n[0]).join("");
   };
 
+  // Mobile: auto-scroll carousel
+  useEffect(() => {
+    const el = mobileScrollRef.current;
+    if (!el) return;
+    const interval = setInterval(() => {
+      if (pausedRef.current) return;
+      const next = (activeIndex + 1) % testimonials.length;
+      el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+      setActiveIndex(next);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [activeIndex]);
+
+  // Desktop: continuous marquee via requestAnimationFrame
+  useEffect(() => {
+    const track = desktopTrackRef.current;
+    if (!track) return;
+    let pos = 0;
+    const speed = 0.5; // px per frame
+
+    const tick = () => {
+      if (!pausedRef.current) {
+        pos += speed;
+        const half = track.scrollWidth / 2;
+        if (pos >= half) pos = 0;
+        track.style.transform = `translateX(-${pos}px)`;
+      }
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+    animFrameRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, []);
+
+  const doubled = [...testimonials, ...testimonials];
+
   return (
     <section className="py-7 px-4 bg-muted/50">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl font-bold text-center mb-8 text-foreground">
+        <h2 className="font-display text-3xl sm:text-5xl font-bold text-center mb-5 sm:mb-8 text-foreground">
           What Learners <span className="text-gradient">Say</span>
         </h2>
 
-        {/* Mobile: full-width snap carousel */}
+        {/* Mobile: auto-scroll snap carousel */}
         <div className="relative sm:hidden overflow-hidden">
           <div
-            ref={scrollRef}
+            ref={mobileScrollRef}
             className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3"
             onScroll={(e) => {
               const el = e.currentTarget;
               setActiveIndex(Math.round(el.scrollLeft / el.clientWidth));
             }}
+            onMouseEnter={() => { pausedRef.current = true; }}
+            onMouseLeave={() => { pausedRef.current = false; }}
           >
             {testimonials.map((t, i) => (
               <div key={i} className="w-full flex-shrink-0 snap-start px-1">
-                <ReviewCard t={t} getInitials={getInitials} />
+                <ReviewCard t={t} getInitials={getInitials} className="w-full" />
               </div>
             ))}
           </div>
-          {/* Scroll Dots */}
           <div className="flex justify-center gap-2 mt-3">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 onClick={() => {
-                  const el = scrollRef.current;
+                  const el = mobileScrollRef.current;
                   if (!el) return;
                   el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
                   setActiveIndex(i);
@@ -86,11 +127,17 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* Desktop: static grid */}
-        <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {testimonials.map((t, i) => (
-            <ReviewCard key={i} t={t} getInitials={getInitials} />
-          ))}
+        {/* Desktop: infinite auto-scrolling marquee */}
+        <div
+          className="hidden sm:block overflow-hidden"
+          onMouseEnter={() => { pausedRef.current = true; }}
+          onMouseLeave={() => { pausedRef.current = false; }}
+        >
+          <div ref={desktopTrackRef} className="flex gap-3 will-change-transform">
+            {doubled.map((t, i) => (
+              <ReviewCard key={i} t={t} getInitials={getInitials} className="w-64 flex-shrink-0" />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -98,4 +145,3 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
-

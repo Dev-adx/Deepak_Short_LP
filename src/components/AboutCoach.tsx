@@ -3,14 +3,14 @@ import coachImg from "@/assets/coach.jpg";
 const AboutCoach = () => (
   <section className="py-7 px-4 bg-muted/50">
     <div className="max-w-4xl mx-auto">
-      <h2 className="font-display text-3xl font-bold text-center mb-10 text-foreground">
+      <h2 className="font-display text-3xl sm:text-5xl font-bold text-center mb-6 sm:mb-10 text-foreground">
         Meet Your Trainer – <span className="text-gradient">Siddharth Kapoor</span>
       </h2>
-      <div className="flex flex-col md:flex-row items-center gap-8 bg-card rounded-2xl border p-8 hover:shadow-lg transition-all duration-300">
+      <div className="flex flex-col md:flex-row items-center gap-5 sm:gap-8 bg-card rounded-2xl border p-5 sm:p-8 hover:shadow-lg transition-all duration-300">
         <img
           src={coachImg}
           alt="Siddharth Kapoor - SEBI Registered Analyst"
-          className="w-40 h-40 rounded-full object-cover border-4 border-primary/20 shrink-0"
+          className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/20 shrink-0"
         />
         <div className="space-y-3 text-center md:text-left">
           <div className="inline-block bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-full">

@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import StickyBanner from "@/components/StickyBanner";
 
 const Index = () => (
-  <div className="min-h-screen bg-background">
+  <div className="min-h-screen bg-background pb-14">
     <HeroSection />
     <Testimonials />
     <WhatYouLearn />
