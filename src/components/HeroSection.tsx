@@ -66,7 +66,7 @@ const HeroSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-5 items-center">
             {/* Left: Content */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               <h1 className="font-display text-3xl md:text-5xl font-bold leading-tight text-foreground">
                 A Structured,{" "}
                 <span className="text-gradient">Rule-Based Approach to Reading Markets</span>
