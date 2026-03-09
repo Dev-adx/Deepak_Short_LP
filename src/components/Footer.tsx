@@ -1,5 +1,5 @@
 const Footer = () => (
-  <footer className="bg-foreground text-primary-foreground py-10 px-4 pb-24">
+  <footer className="bg-foreground text-primary-foreground py-8 px-4 pb-20">
     <div className="max-w-4xl mx-auto text-center space-y-4">
       <p className="text-sm font-medium">SEBI Registered Analyst: INH000022297</p>
       <p className="text-xs opacity-70 max-w-2xl mx-auto leading-relaxed">
@@ -9,8 +9,7 @@ const Footer = () => (
         responsible for your financial decisions.
       </p>
       <p className="text-xs opacity-50">
-        © 2026 Siddharth Kapoor. All rights reserved. Powered by Adx Media Advertising LLP.
-        Marketing Partner: Offbeat Culture Private Limited
+        © 2026 Siddharth Kapoor. All rights reserved.
       </p>
     </div>
   </footer>

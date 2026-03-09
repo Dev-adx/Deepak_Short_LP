@@ -12,7 +12,7 @@ const FAQ = () => {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-7 px-4">
       <div className="max-w-3xl mx-auto">
         <h2 className="font-display text-3xl font-bold text-center mb-10 text-foreground">
           Frequently Asked <span className="text-gradient">Questions</span>
@@ -21,18 +21,18 @@ const FAQ = () => {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-card rounded-xl border overflow-hidden"
+              className="bg-card rounded-xl border overflow-hidden transition-all duration-300"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between p-4 text-left font-medium text-foreground hover:bg-muted/50 transition-colors"
               >
                 {faq.q}
-                <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${open === i ? "rotate-180" : ""}`} />
+                <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} />
               </button>
-              {open === i && (
+              <div className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="px-4 pb-4 text-sm text-muted-foreground">{faq.a}</div>
-              )}
+              </div>
             </div>
           ))}
         </div>

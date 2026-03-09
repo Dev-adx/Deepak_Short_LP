@@ -6,8 +6,8 @@ const CTABanner = () => {
   };
 
   return (
-    <section className="py-12 px-4">
-      <div className="max-w-3xl mx-auto gradient-primary rounded-2xl p-8 md:p-10 text-center space-y-4">
+    <section className="py-5 px-4">
+      <div className="max-w-3xl mx-auto gradient-primary rounded-2xl p-6 md:p-8 text-center space-y-4">
         <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
           Register to Reserve Your Spot
         </h2>
@@ -20,7 +20,7 @@ const CTABanner = () => {
         </p>
         <Button
           onClick={scrollToForm}
-          className="bg-card text-foreground hover:bg-card/90 font-semibold px-8 py-6 text-base"
+          className="bg-card text-foreground hover:bg-card/90 hover:scale-105 font-semibold px-8 py-6 text-base transition-all duration-300"
         >
           Register Now →
         </Button>

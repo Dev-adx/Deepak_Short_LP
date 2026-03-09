@@ -7,14 +7,14 @@ const personas = [
 ];
 
 const PerfectFor = () => (
-  <section className="py-16 px-4">
+  <section className="py-7 px-4">
     <div className="max-w-5xl mx-auto">
       <h2 className="font-display text-3xl font-bold text-center mb-10 text-foreground">
         This Workshop Is <span className="text-gradient">Perfect For You</span> If…
       </h2>
       <div className="grid md:grid-cols-3 gap-6">
         {personas.map((p) => (
-          <div key={p.title} className="bg-card rounded-2xl border p-6 text-center space-y-3 hover:shadow-md transition-shadow">
+          <div key={p.title} className="bg-card rounded-2xl border p-6 text-center space-y-3 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center mx-auto">
               <p.icon className="w-6 h-6 text-primary-foreground" />
             </div>
