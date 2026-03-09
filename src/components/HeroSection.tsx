@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import coachImg from "@/assets/coach.jpg";
 
 const HeroSection = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", profession: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [seats, setSeats] = useState(127);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeats((prev) => (prev <= 1 ? 127 : prev - 1));
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,7 +101,7 @@ const HeroSection = () => {
                   { label: "16-17 March 2026" },
                   { label: "8:00 – 10:30 PM" },
                   { label: "Live on Zoom" },
-                  { label: "Only 127 seats left" },
+                  { label: `Only ${seats} seats left` },
                 ].map((item) => (
                   <span
                     key={item.label}
@@ -159,7 +167,11 @@ const HeroSection = () => {
                     <Button type="submit" variant="default" size="lg" className="w-full text-base py-6">
                       Register For Just ₹99 →
                     </Button>
-                    <p className="text-xs text-center text-muted-foreground">
+                    <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1">
+                      <svg className="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                      </svg>
                       Your information is safe. We respect your privacy.
                     </p>
                   </form>
