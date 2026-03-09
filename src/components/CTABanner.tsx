@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { useEventConfig } from "@/hooks/useEventConfig";
 
 const CTABanner = () => {
+  const { formatOfferDate } = useEventConfig();
   const scrollToForm = () => {
     document.getElementById("register-form")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -16,7 +18,7 @@ const CTABanner = () => {
           <span className="text-lg line-through opacity-60">₹499</span>
         </div>
         <p className="text-primary-foreground/80 text-sm">
-          Hurry up — the offer ends on 9 March 2026 • Limited seats
+          Hurry up — the offer ends on {formatOfferDate()} • Limited seats
         </p>
         <Button
           onClick={scrollToForm}

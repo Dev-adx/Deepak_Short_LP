@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import coachImg from "@/assets/coach.jpg";
+import { useEventConfig } from "@/hooks/useEventConfig";
 
 const HeroSection = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", profession: "" });
   const [submitted, setSubmitted] = useState(false);
   const [seats, setSeats] = useState(127);
+  const { getDateRange, formatTime, formatOfferDate } = useEventConfig();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,11 +64,11 @@ const HeroSection = () => {
       </div>
 
       {/* Hero section */}
-      <section className="py-6 px-4">
+      <section className="py-3 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-5 items-center">
             {/* Left: Content */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <h1 className="font-display text-3xl md:text-5xl font-bold leading-tight text-foreground">
                 A Structured,{" "}
                 <span className="text-gradient">Rule-Based Approach to Reading Markets</span>
@@ -98,14 +100,14 @@ const HeroSection = () => {
               {/* Workshop info pills */}
               <div className="flex flex-wrap gap-3">
                 {[
-                  { label: "16-17 March 2026" },
-                  { label: "8:00 – 10:30 PM" },
+                  { label: getDateRange() },
+                  { label: formatTime() },
                   { label: "Live on Zoom" },
                   { label: `Only ${seats} seats left` },
                 ].map((item) => (
                   <span
                     key={item.label}
-                    className="bg-muted/80 border-2 border-orange-500/60 rounded-lg px-4 py-2.5 text-xs font-bold text-orange-600 shadow-[0_0_20px_rgba(249,115,22,0.5),0_0_40px_rgba(249,115,22,0.2)] animate-pulse"
+                    className="bg-muted/80 border-2 border-orange-500/60 rounded-lg px-4 py-2.5 text-xs font-bold text-orange-600 glow-orange"
                   >
                     {item.label}
                   </span>
@@ -124,7 +126,7 @@ const HeroSection = () => {
                 <>
                   <h2 className="font-display text-xl font-bold text-foreground mb-1">Register For Just <span className="text-gradient">₹99</span></h2>
                   <p className="text-sm text-muted-foreground mb-5">
-                    <span className="line-through">₹499</span> — Offer ends 9 March 2026
+                    <span className="line-through">₹499</span> — Offer ends {formatOfferDate()}
                   </p>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <input

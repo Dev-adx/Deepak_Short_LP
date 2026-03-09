@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react"
 
 export interface EventConfig {
-  day1Datetime: string  // "2026-02-28T20:00:00"
-  day2Datetime: string  // "2026-03-01T10:00:00"
+  day1Datetime: string       // "2026-02-28T20:00:00"
+  day2Datetime: string       // "2026-03-01T10:00:00"
+  offerEndDatetime: string   // "2026-03-09T23:59:59"
   whatsappLink: string
   paymentLink: string
   price: string
@@ -13,6 +14,7 @@ export interface EventConfig {
 const DEFAULT_CONFIG: EventConfig = {
   day1Datetime: "2026-02-28T20:00:00",
   day2Datetime: "2026-03-01T10:00:00",
+  offerEndDatetime: "2026-03-09T23:59:59",
   whatsappLink: "https://chat.whatsapp.com/FqR0pu9etvj3pR6ICm6JzQ",
   paymentLink: "https://rzp.io/rzp/vhef5ncx",
   price: "₹99",
@@ -21,6 +23,7 @@ const DEFAULT_CONFIG: EventConfig = {
 const CONFIG_URL = "https://script.google.com/macros/s/AKfycbwO9BXEn_io_etppvii304GFHwa4vUtHCMgIq6sBJylLNZECuQeirWRdQiEEe-XMkBj/exec"
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+const FULL_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
 const IST_OFFSET_MINUTES = 330 // UTC+5:30
 
 // Extract parts and convert to IST if string is UTC (ends with Z or has offset)
@@ -76,11 +79,12 @@ export function useEventConfig() {
 
         if (data && typeof data === 'object') {
           setConfig({
-            day1Datetime: data.day1_datetime || DEFAULT_CONFIG.day1Datetime,
-            day2Datetime: data.day2_datetime || DEFAULT_CONFIG.day2Datetime,
-            whatsappLink: data.whatsapp_link || DEFAULT_CONFIG.whatsappLink,
-            paymentLink:  data.payment_link  || DEFAULT_CONFIG.paymentLink,
-            price:        data.price         || DEFAULT_CONFIG.price,
+            day1Datetime:     data.day1_datetime      || DEFAULT_CONFIG.day1Datetime,
+            day2Datetime:     data.day2_datetime      || DEFAULT_CONFIG.day2Datetime,
+            offerEndDatetime: data.offer_end_datetime || DEFAULT_CONFIG.offerEndDatetime,
+            whatsappLink:     data.whatsapp_link      || DEFAULT_CONFIG.whatsappLink,
+            paymentLink:      data.payment_link       || DEFAULT_CONFIG.paymentLink,
+            price:            data.price              || DEFAULT_CONFIG.price,
           })
         }
         setError(null)
@@ -118,8 +122,15 @@ export function useEventConfig() {
     return `${fmt(parseDT(config.day1Datetime))} & ${fmt(parseDT(config.day2Datetime))} IST`
   }
 
+  // "9 March 2026"
+  const formatOfferDate = () => {
+    const d = parseDT(config.offerEndDatetime)
+    return `${d.day} ${FULL_MONTHS[d.month - 1]} ${d.year}`
+  }
+
   // Used by countdown — treat as local time (app is IST-targeted)
   const getEventDateTime = () => new Date(config.day1Datetime)
+  const getOfferEndDateTime = () => new Date(config.offerEndDatetime)
 
-  return { config, loading, error, getDateRange, formatTime, getEventDateTime }
+  return { config, loading, error, getDateRange, formatTime, formatOfferDate, getEventDateTime, getOfferEndDateTime }
 }
