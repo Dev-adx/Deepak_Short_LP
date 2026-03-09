@@ -121,7 +121,7 @@ const HeroSection = () => {
                     <option value="trader">Trader</option>
                     <option value="other">Other</option>
                   </select>
-                  <Button type="submit" variant="cta" size="lg" className="w-full text-base py-6">
+                  <Button type="submit" variant="default" size="lg" className="w-full text-base py-6">
                     Register For Just ₹99 →
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
