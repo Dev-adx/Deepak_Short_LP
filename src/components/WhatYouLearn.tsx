@@ -11,7 +11,7 @@ const items = [
 const WhatYouLearn = () => (
   <section className="gradient-primary py-10 px-4">
     <div className="max-w-4xl mx-auto">
-      <h2 className="font-display text-3xl sm:text-5xl md:text-4xl font-bold text-center mb-2 sm:mb-3 text-white">
+      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2 sm:mb-3 text-white">
         What You'll Learn Inside
       </h2>
       <p className="text-center text-white/90 mb-5 sm:mb-8 max-w-xl mx-auto text-sm sm:text-base">
