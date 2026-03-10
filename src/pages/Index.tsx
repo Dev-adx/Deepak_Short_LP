@@ -1,25 +1,20 @@
 import HeroSection from "@/components/HeroSection";
-import WhatYouLearn from "@/components/WhatYouLearn";
-import PerfectFor from "@/components/PerfectFor";
-import Testimonials from "@/components/Testimonials";
-import AboutCoach from "@/components/AboutCoach";
-import CTABanner from "@/components/CTABanner";
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
-import StickyBanner from "@/components/StickyBanner";
+import AboutSection from "@/components/AboutSection";
+import WhatYouLearnSection from "@/components/WhatYouLearnSection";
+import WorkshopDaysSection from "@/components/WorkshopDaysSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import FAQSection from "@/components/FAQSection";
+import StickyCTA from "@/components/StickyCTA";
 
 const Index = () => (
-  <div className="min-h-screen bg-background pb-14">
+  <div className="min-h-screen bg-background pb-20" id="register">
     <HeroSection />
-    <Testimonials />
-    <WhatYouLearn />
-    <PerfectFor />
-    <CTABanner />
-    <AboutCoach />
-    <FAQ />
-    <CTABanner />
-    <Footer />
-    <StickyBanner />
+    <AboutSection />
+    <WhatYouLearnSection />
+    <WorkshopDaysSection />
+    <TestimonialsSection />
+    <FAQSection />
+    <StickyCTA />
   </div>
 );
 
