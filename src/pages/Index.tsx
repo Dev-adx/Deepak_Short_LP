@@ -7,7 +7,7 @@ import FAQSection from "@/components/FAQSection";
 import StickyCTA from "@/components/StickyCTA";
 
 const Index = () => (
-  <div className="min-h-screen bg-background pb-20" id="register">
+  <div className="min-h-screen bg-background pb-32" id="register">
     <HeroSection />
     <TestimonialsSection />
     <AboutSection />
