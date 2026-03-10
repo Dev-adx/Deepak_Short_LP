@@ -9,10 +9,10 @@ import StickyCTA from "@/components/StickyCTA";
 const Index = () => (
   <div className="min-h-screen bg-background pb-20" id="register">
     <HeroSection />
+    <TestimonialsSection />
     <AboutSection />
     <WhatYouLearnSection />
     <WorkshopDaysSection />
-    <TestimonialsSection />
     <FAQSection />
     <StickyCTA />
   </div>
