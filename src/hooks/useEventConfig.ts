@@ -20,9 +20,9 @@ const DEFAULT_CONFIG: EventConfig = {
   price: "₹99",
 }
 
-const CONFIG_URL = "https://script.google.com/macros/s/AKfycbwKdD14VVmL_qrwXQXwLSAGyNBSrzhspr_Kk7FqcqhaN1sUycByYoq55TlToHnetR3I/exec"
+const CONFIG_URL = "https://script.google.com/macros/s/AKfycbxPYd6BHMCS9K_9wfXB09g95V0nOSlox9kdLME-76PhwWZCUeOq5InGHQYKjFmxWgum/exec"
 const CACHE_KEY = "sk_event_cfg"
-const CACHE_TTL = 10 * 60 * 1000 // 10 minutes
+const CACHE_TTL = 0 // always fetch fresh – no caching
 
 // ── Module-level singleton: shared across all hook instances ──────────
 let moduleConfig: EventConfig | null = null
@@ -68,6 +68,7 @@ const startFetch = () => {
       }
     })
     .catch(() => { /* silently keep cached/default */ })
+    .finally(() => { fetchStarted = false }) // allow re-fetch next time
 }
 
 // ── Initialise module cache from localStorage immediately (synchronous) ─
