@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, Globe, Gift, ChevronDown } from "lucide-react";
 import deepakPhoto from "@/assets/deepak-photo.png";
 import LeadForm from "./LeadForm";
+import { useEventConfig } from "@/hooks/useEventConfig";
 
 const HeroSection = () => {
+  const { getDateRange, formatTime } = useEventConfig();
   return (
     <section className="px-4 pt-6 pb-10 md:pt-16 md:pb-16 relative overflow-hidden">
 
@@ -111,8 +113,8 @@ const HeroSection = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10 max-w-2xl mx-auto"
         >
           {[
-            { Icon: Calendar, text: "9th and 10th March 2026" },
-            { Icon: Clock, text: "8:00 PM – 10:30 PM" },
+            { Icon: Calendar, text: getDateRange() },
+            { Icon: Clock, text: formatTime() },
             { Icon: Globe, text: "Live Online Session" },
             { Icon: Gift, text: "Free Bonuses Worth Rs 29,997" },
           ].map((item, i) => (

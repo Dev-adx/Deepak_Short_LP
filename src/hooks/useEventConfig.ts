@@ -16,13 +16,13 @@ const DEFAULT_CONFIG: EventConfig = {
   day2Datetime: "2026-03-15T10:00:00",
   offerEndDatetime: "2026-03-13T23:59:59",
   whatsappLink: "https://chat.whatsapp.com/Git9aq5HlmX4YJysg6SW4C",
-  paymentLink: "https://rzp.io/rzp/pOMBaZk2",
+  paymentLink: "https://pages.razorpay.com/pl_SPQMrgClPrEz79/view",
   price: "₹99",
 }
 
 const CONFIG_URL = "https://script.google.com/macros/s/AKfycbxPYd6BHMCS9K_9wfXB09g95V0nOSlox9kdLME-76PhwWZCUeOq5InGHQYKjFmxWgum/exec"
 const CACHE_KEY = "sk_event_cfg"
-const CACHE_TTL = 0 // always fetch fresh – no caching
+const CACHE_TTL = 5 * 60 * 1000 // cache for 5 minutes
 
 // ── Module-level singleton: shared across all hook instances ──────────
 let moduleConfig: EventConfig | null = null
@@ -51,7 +51,11 @@ const broadcast = (cfg: EventConfig) => {
 const startFetch = () => {
   if (fetchStarted) return
   fetchStarted = true
-  fetch(`${CONFIG_URL}?t=${Date.now()}`, { cache: "no-store" })
+  // Add redirect=false to avoid Google Apps Script redirect delay
+  fetch(`${CONFIG_URL}?t=${Date.now()}&redirect=false`, { 
+    cache: "no-store",
+    redirect: "follow"
+  })
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(data => {
       if (data && typeof data === 'object') {

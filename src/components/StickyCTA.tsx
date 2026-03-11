@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useEventConfig } from "@/hooks/useEventConfig";
 
-const WORKSHOP_DATE = new Date("2026-03-09T20:00:00+05:30");
-
-const getTimeLeft = () => {
+const getTimeLeft = (WORKSHOP_DATE: Date) => {
   const diff = WORKSHOP_DATE.getTime() - Date.now();
   if (diff <= 0) return { h: 0, m: 0, s: 0 };
   return {
@@ -16,12 +15,14 @@ const getTimeLeft = () => {
 const Pad = (n: number) => String(n).padStart(2, "0");
 
 const StickyCTA = () => {
-  const [time, setTime] = useState(getTimeLeft());
+  const { getEventDateTime } = useEventConfig();
+  const workshopDate = getEventDateTime();
+  const [time, setTime] = useState(getTimeLeft(workshopDate));
 
   useEffect(() => {
-    const t = setInterval(() => setTime(getTimeLeft()), 1000);
+    const t = setInterval(() => setTime(getTimeLeft(workshopDate)), 1000);
     return () => clearInterval(t);
-  }, []);
+  }, [workshopDate]);
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-warm-brown/95 backdrop-blur-sm border-t border-border px-4 py-3">
