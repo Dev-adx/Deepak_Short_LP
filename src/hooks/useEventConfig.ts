@@ -22,26 +22,14 @@ const DEFAULT_CONFIG: EventConfig = {
 
 const CONFIG_URL = "https://script.google.com/macros/s/AKfycbxPYd6BHMCS9K_9wfXB09g95V0nOSlox9kdLME-76PhwWZCUeOq5InGHQYKjFmxWgum/exec"
 const CACHE_KEY = "sk_event_cfg"
-const CACHE_TTL = 5 * 60 * 1000 // cache for 5 minutes
 
 // ── Module-level singleton: shared across all hook instances ──────────
 let moduleConfig: EventConfig | null = null
 let subscribers: Array<(c: EventConfig) => void> = []
 let fetchStarted = false
 
-const readLocalCache = (): EventConfig | null => {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY)
-    if (!raw) return null
-    const { data, ts } = JSON.parse(raw)
-    if (Date.now() - ts > CACHE_TTL) return null
-    return data as EventConfig
-  } catch { return null }
-}
-
-const writeLocalCache = (data: EventConfig) => {
-  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() })) } catch { /* noop */ }
-}
+// Clear any stale localStorage cache so old dates never block fresh data
+try { localStorage.removeItem(CACHE_KEY) } catch { /* noop */ }
 
 const broadcast = (cfg: EventConfig) => {
   moduleConfig = cfg
@@ -67,7 +55,6 @@ const startFetch = () => {
           paymentLink:      data.payment_link       || DEFAULT_CONFIG.paymentLink,
           price:            data.price              || DEFAULT_CONFIG.price,
         }
-        writeLocalCache(cfg)
         broadcast(cfg)
       }
     })
@@ -75,8 +62,8 @@ const startFetch = () => {
     .finally(() => { fetchStarted = false }) // allow re-fetch next time
 }
 
-// ── Initialise module cache from localStorage immediately (synchronous) ─
-moduleConfig = readLocalCache() ?? DEFAULT_CONFIG
+// ── Initialise module config with defaults (no cache – always fetch fresh) ─
+moduleConfig = DEFAULT_CONFIG
 
 // ── Parsers ────────────────────────────────────────────────────────────
 const MONTHS      = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
