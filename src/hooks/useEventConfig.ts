@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: EventConfig = {
   day1Datetime: "2026-03-14T20:00:00",
   day2Datetime: "2026-03-15T10:00:00",
   offerEndDatetime: "2026-03-13T23:59:59",
-  whatsappLink: "https://chat.whatsapp.com/Git9aq5HlmX4YJysg6SW4C",
+  whatsappLink: "https://chat.whatsapp.com/IAJoElgze7IHCd35YfVBpI",
   paymentLink: "https://pages.razorpay.com/pl_Re1XOtC43278Yi/view",
   price: "₹99",
 }
