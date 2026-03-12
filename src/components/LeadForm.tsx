@@ -51,9 +51,9 @@ const LeadForm = () => {
       validate();
       return;
     }
-    fbq('track', 'AddToCart', {
+    window.fbq?.('track', 'AddToCart', {
       value: parseFloat(config.price.slice(1)),
-      currency: 'INR'
+      currency: 'INR',
     });
     const payUrl =
       config.paymentLink.replace(/\/$/, "") +
