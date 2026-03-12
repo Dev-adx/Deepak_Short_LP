@@ -15,6 +15,7 @@ const ThankYou = () => {
   const { config } = useEventConfig();
 
   useEffect(() => { 
+    fbq('track', 'PageView');
     window.scrollTo({ top: 0, behavior: "instant" }); 
     fbq('track', 'Purchase', {
       value: 99,
