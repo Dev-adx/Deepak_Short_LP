@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useEventConfig } from "@/hooks/useEventConfig";
 
+declare global {
+  interface Window {
+    fbq: (...args: any[]) => void;
+  }
+}
+
 const getTimeLeft = (WORKSHOP_DATE: Date) => {
   const diff = WORKSHOP_DATE.getTime() - Date.now();
   if (diff <= 0) return { h: 0, m: 0, s: 0 };
@@ -64,6 +70,7 @@ const StickyCTA = () => {
         {/* Row 2: CTA centered */}
         <motion.a
           href="#register"
+          onClick={() => fbq('track', 'Subscribe')}
           className="w-full text-center py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-bold animate-blink shadow-[0_4px_18px_hsl(28_60%_48%/0.5)] touch-manipulation"
           whileTap={{ scale: 0.93, y: 2 }}
           transition={{ type: "spring", stiffness: 400, damping: 15 }}

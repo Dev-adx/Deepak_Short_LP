@@ -1,22 +1,9 @@
-# Task: Update hardcoded dates to use Google Apps Script config
+# Meta Pixel Events Complete ✓
 
-## Steps to Complete:
+## Updates:
+- StickyCTA button: fbq('track', 'Subscribe')
+- LeadForm submit: fbq('track', 'AddToCart', {value: ~₹99, currency: 'INR'})
+- ThankYou mount: fbq('track', 'Purchase', {value: 99, currency: 'INR', content_ids: ['blockchain-workshop']})
+- TypeScript declarations added for fbq
 
-### 1. Update HeroSection.tsx
-- [x] Import useEventConfig hook
-- [x] Use getDateRange() for date display
-- [x] Use formatTime() for time display
-
-### 2. Update StickyCTA.tsx
-- [x] Import useEventConfig hook
-- [x] Use getEventDateTime() for countdown date
-- [x] Update countdown logic to work with dynamic date
-
-## Current Config Values (from Google Apps Script):
-- day1_datetime: 3/14/2026 20:00:00 (March 14, 2026 8:00 PM)
-- day2_datetime: 3/15/2026 10:00:00 (March 15, 2026 10:00 AM)
-- whatsapp_link: https://chat.whatsapp.com/Git9aq5HlmX4YJysg6SW4C
-- payment_link: https://pages.razorpay.com/pl_SPQMrgClPrEz79/view
-
-## Status: COMPLETED ✅
-
+**Test:** Dev server running. Click CTAs → check Network tab for facebook.net or console fbq calls. Verify in Facebook Events Manager.

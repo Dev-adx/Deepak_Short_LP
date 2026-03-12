@@ -1,40 +1,67 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, CheckCircle } from "lucide-react";
+import { useEventConfig } from "@/hooks/useEventConfig";
+
+declare global {
+  interface Window {
+    fbq: (...args: any[]) => void;
+  }
+}
 
 const professions = ["Working Professional", "Business Owner", "Student", "Beginner in Crypto"];
 
 const LeadForm = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", profession: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const { config } = useEventConfig();
+    const [errors, setErrors] = useState<Partial<typeof form>>({});
+
+    const validateField = (field: keyof typeof form, value: string) => {
+      let error = "";
+      if (field === "name") {
+        if (!value.trim() || value.trim().length < 2) error = "Enter your full name (min 2 chars)";
+      } else if (field === "email") {
+        if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = "Enter a valid email";
+      } else if (field === "phone") {
+        if (!value || !/^\d{10}$/.test(value.replace(/\s/g, ""))) error = "Enter a 10-digit phone number";
+      } else if (field === "profession") {
+        if (!value) error = "Select your profession";
+      }
+      setErrors((prev) => ({ ...prev, [field]: error }));
+      return !error;
+    };
+
+    const validate = () => {
+      validateField("name", form.name);
+      validateField("email", form.email);
+      validateField("phone", form.phone);
+      validateField("profession", form.profession);
+    };
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+
+    const isFormValid = form.name.trim().length >= 2 &&
+      emailRegex.test(form.email) &&
+      phoneRegex.test(form.phone.replace(/\s/g, '')) &&
+      !!form.profession;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!isFormValid) {
+      validate();
+      return;
+    }
+    fbq('track', 'AddToCart', {
+      value: parseFloat(config.price.slice(1)),
+      currency: 'INR'
+    });
+    const payUrl =
+      config.paymentLink.replace(/\/$/, "") +
+      `?name=${encodeURIComponent(form.name)}` +
+      `&email=${encodeURIComponent(form.email)}` +
+      `&phone=${encodeURIComponent(form.phone)}`;
+    window.location.href = payUrl;
   };
-
-  if (submitted) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-md mx-auto p-8 rounded-2xl bg-card border border-border text-center"
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-          className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4"
-        >
-          <CheckCircle className="w-10 h-10 text-accent" />
-        </motion.div>
-        <h3 className="text-xl font-bold text-foreground mb-2">Registration Complete!</h3>
-        <p className="text-muted-foreground">
-          Thank you for registering. You'll receive a confirmation email shortly with all the workshop details.
-        </p>
-      </motion.div>
-    );
-  }
 
   return (
     <motion.form 
@@ -73,10 +100,14 @@ const LeadForm = () => {
             placeholder="Enter your full name"
             required
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg bg-background/80 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-            whileFocus={{ scale: 1.01, borderColor: "rgb(var(--accent))" }}
+            onChange={(e) => {
+              setForm({ ...form, name: e.target.value });
+              validateField("name", e.target.value);
+            }}
+            className={`w-full px-4 py-3 rounded-lg bg-background/80 border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all ${errors.name ? 'border-destructive ring-destructive/50' : 'border-border focus:border-transparent focus:ring-accent'} `}
+            whileFocus={{ scale: 1.01 }}
           />
+          {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
         </motion.div>
         
         <motion.div
@@ -90,10 +121,14 @@ const LeadForm = () => {
             placeholder="Enter your email"
             required
             value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg bg-background/80 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-            whileFocus={{ scale: 1.01, borderColor: "rgb(var(--accent))" }}
+            onChange={(e) => {
+              setForm({ ...form, email: e.target.value });
+              validateField("email", e.target.value);
+            }}
+            className={`w-full px-4 py-3 rounded-lg bg-background/80 border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all ${errors.email ? 'border-destructive ring-destructive/50' : 'border-border focus:border-transparent'}`}
+            whileFocus={{ scale: 1.01 }}
           />
+          {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
         </motion.div>
         
         <motion.div
@@ -107,10 +142,14 @@ const LeadForm = () => {
             placeholder="Enter your phone number"
             required
             value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full px-4 py-3 rounded-lg bg-background/80 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-            whileFocus={{ scale: 1.01, borderColor: "rgb(var(--accent))" }}
+            onChange={(e) => {
+              setForm({ ...form, phone: e.target.value });
+              validateField("phone", e.target.value);
+            }}
+            className={`w-full px-4 py-3 rounded-lg bg-background/80 border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all ${errors.phone ? 'border-destructive ring-destructive/50' : 'border-border focus:border-transparent'}`}
+            whileFocus={{ scale: 1.01 }}
           />
+          {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
         </motion.div>
 
         <motion.div
@@ -139,7 +178,10 @@ const LeadForm = () => {
                   name="profession"
                   value={p}
                   checked={form.profession === p}
-                  onChange={(e) => setForm({ ...form, profession: e.target.value })}
+                  onChange={(e) => {
+                    setForm({ ...form, profession: e.target.value });
+                    validateField("profession", e.target.value);
+                  }}
                   className="sr-only"
                 />
                 <motion.span 
@@ -159,16 +201,22 @@ const LeadForm = () => {
               </motion.label>
             ))}
           </div>
+          {errors.profession && <p className="text-destructive text-xs mt-1">{errors.profession}</p>}
         </motion.div>
       </div>
 
       <motion.button
         type="submit"
-        className="w-full mt-6 py-4 rounded-xl bg-accent text-accent-foreground font-bold text-base shadow-lg shadow-accent/25 flex items-center justify-center gap-2"
-        whileHover={{ scale: 1.02, boxShadow: "0 10px 30px -10px rgba(var(--accent), 0.4)" }}
-        whileTap={{ scale: 0.98 }}
+        disabled={!isFormValid}
+        className={`w-full mt-6 py-4 rounded-xl font-bold text-base shadow-lg flex items-center justify-center gap-2 transition-all ${
+          isFormValid 
+            ? 'bg-accent text-accent-foreground shadow-accent/25 hover:shadow-accent/40 cursor-pointer' 
+            : 'bg-muted text-muted-foreground shadow-sm cursor-not-allowed'
+        }`}
+        whileHover={isFormValid ? { scale: 1.02, boxShadow: "0 10px 30px -10px rgba(var(--accent), 0.4)" } : {}}
+        whileTap={isFormValid ? { scale: 0.98 } : {}}
       >
-        Join The Workshop For Rs 99
+        Pay {config.price} Now
       </motion.button>
 
     </motion.form>

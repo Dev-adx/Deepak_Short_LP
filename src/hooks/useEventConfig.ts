@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 
 export interface EventConfig {
@@ -16,7 +14,7 @@ const DEFAULT_CONFIG: EventConfig = {
   day2Datetime: "2026-03-15T10:00:00",
   offerEndDatetime: "2026-03-13T23:59:59",
   whatsappLink: "https://chat.whatsapp.com/Git9aq5HlmX4YJysg6SW4C",
-  paymentLink: "https://pages.razorpay.com/pl_SPQMrgClPrEz79/view",
+  paymentLink: "https://pages.razorpay.com/pl_Re1XOtC43278Yi/view",
   price: "₹99",
 }
 

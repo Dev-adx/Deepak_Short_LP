@@ -4,11 +4,24 @@ import { motion } from "framer-motion";
 import { CheckCircle, ArrowLeft, MessageCircle } from "lucide-react";
 import { useEventConfig } from "@/hooks/useEventConfig";
 
+declare global {
+  interface Window {
+    fbq: (...args: any[]) => void;
+  }
+}
+
 /* ── Main Component ───────────────────────────────────────────────── */
 const ThankYou = () => {
   const { config } = useEventConfig();
 
-  useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, []);
+  useEffect(() => { 
+    window.scrollTo({ top: 0, behavior: "instant" }); 
+    fbq('track', 'Purchase', {
+      value: 99,
+      currency: 'INR',
+      content_ids: ['blockchain-workshop']
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10 relative overflow-hidden">
