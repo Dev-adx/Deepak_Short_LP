@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useEventConfig } from "@/hooks/useEventConfig";
-
-declare global {
-  interface Window {
-    fbq: (...args: any[]) => void;
-  }
-}
+import { trackAddToCart } from "@/lib/pixel";
 
 const professions = ["Working Professional", "Business Owner", "Student", "Beginner in Crypto"];
 
@@ -51,10 +46,7 @@ const LeadForm = () => {
       validate();
       return;
     }
-    window.fbq?.('track', 'AddToCart', {
-      value: parseFloat(config.price.slice(1)),
-      currency: 'INR',
-    });
+    trackAddToCart(parseFloat(config.price.slice(1)));
     const payUrl =
       config.paymentLink.replace(/\/$/, "") +
       `?name=${encodeURIComponent(form.name)}` +

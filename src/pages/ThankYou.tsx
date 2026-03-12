@@ -3,25 +3,16 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowLeft, MessageCircle } from "lucide-react";
 import { useEventConfig } from "@/hooks/useEventConfig";
-
-declare global {
-  interface Window {
-    fbq: (...args: any[]) => void;
-  }
-}
+import { trackPageView, trackPurchase } from "@/lib/pixel";
 
 /* ── Main Component ───────────────────────────────────────────────── */
 const ThankYou = () => {
   const { config } = useEventConfig();
 
   useEffect(() => { 
-    fbq('track', 'PageView');
+    trackPageView();
     window.scrollTo({ top: 0, behavior: "instant" }); 
-    fbq('track', 'Purchase', {
-      value: 99,
-      currency: 'INR',
-      content_ids: ['blockchain-workshop']
-    });
+    trackPurchase();
   }, []);
 
   return (
