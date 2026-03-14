@@ -92,25 +92,27 @@ const ThankYou = () => {
               </motion.p>
 
               {/* WhatsApp Button */}
-              <motion.a
-                href={config.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center justify-center gap-2.5 font-bold text-sm sm:text-base px-8 py-3.5 rounded-xl w-full transition-all"
-                style={{ 
-                  background: "hsl(28 60% 48%)", 
-                  color: "#fff", 
-                  boxShadow: "0 4px 20px hsl(28 60% 48% / 0.3)" 
-                }}
-              >
-                <MessageCircle className="w-5 h-5 flex-shrink-0" />
-                Join WhatsApp Group
-              </motion.a>
+              {config.whatsappLink && (
+                <motion.a
+                  href={config.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center justify-center gap-2.5 font-bold text-sm sm:text-base px-8 py-3.5 rounded-xl w-full transition-all"
+                  style={{
+                    background: "hsl(28 60% 48%)",
+                    color: "#fff",
+                    boxShadow: "0 4px 20px hsl(28 60% 48% / 0.3)"
+                  }}
+                >
+                  <MessageCircle className="w-5 h-5 flex-shrink-0" />
+                  Join WhatsApp Group
+                </motion.a>
+              )}
             </div>
 
             {/* Footer */}
